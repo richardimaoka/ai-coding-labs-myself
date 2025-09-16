@@ -1,12 +1,8 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import { Graph, Node, Edge } from "./types";
-import { addNode, addEdge, addNeighbors, emptyGraph } from "./graph";
+import { describe, expect, it } from "vitest";
+import { addEdge, addNode, emptyGraph } from "./graph";
+import { Edge, Node } from "./types";
 
 describe("Graph functions", () => {
-
-  beforeEach(() => {
-  });
-
   describe("addNode", () => {
     it("should add a new node to the graph", () => {
       const graph = emptyGraph();
@@ -48,6 +44,4 @@ describe("Graph functions", () => {
       expect(newGraph.edges).toHaveLength(1);
     });
   });
-
-  
 });
