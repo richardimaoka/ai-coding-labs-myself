@@ -1,5 +1,12 @@
 import { Graph, Node, Edge } from "./types";
 
+export function emptyGraph(): Graph {
+  return {
+    nodes: [],
+    edges: [],
+  };
+}
+
 export function addNode(graph: Graph, node: Node): Graph {
   if (graph.nodes.some((n) => n.id === node.id)) {
     return graph; // Node already exists, return original graph
@@ -25,22 +32,6 @@ export function addEdge(graph: Graph, edge: Edge): Graph {
   };
 }
 
-export function addNeighbors(
-  graph: Graph,
-  nodeId: string,
-  neighborIds: string[],
-  defaultWeight: number = 1
-): Graph {
-  let newGraph = { ...graph };
-  for (const neighborId of neighborIds) {
-    const newEdge: Edge = {
-      from: nodeId,
-      to: neighborId,
-      weight: defaultWeight,
-    };
-    newGraph = addEdge(newGraph, newEdge);
-  }
-  return newGraph;
-}
+
 
 
