@@ -18,7 +18,6 @@ describe("dijkstra", () => {
     graph = addEdge(graph, "B", "C", 1);
 
     const result = dijkstra(graph, "A", "C");
-
     expect(result).toEqual({ path: ["A", "B", "C"], distance: 2 });
   });
 });
