@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addEdge, addNode, emptyGraph, newEdge } from "./graph";
+import { addEdge, addNode, emptyGraph, newEdge, edgeEqual } from "./graph";
 import { Node } from "./types";
 
 describe("Graph functions", () => {
@@ -64,6 +64,38 @@ describe("Graph functions", () => {
       expect(() => addEdge(graph, "A", "B", 1)).toThrowError(
         `Node with id A does not exist in the graph.`
       );
+    });
+  });
+
+  describe("edgeEqual", () => {
+    it("should return true for identical edges", () => {
+      const edge1 = newEdge("A", "B", 1);
+      const edge2 = newEdge("A", "B", 1);
+      expect(edgeEqual(edge1, edge2)).toBe(true);
+    });
+
+    it("should return true for edges with reversed nodes but same weight", () => {
+      const edge1 = newEdge("A", "B", 1);
+      const edge2 = newEdge("B", "A", 1);
+      expect(edgeEqual(edge1, edge2)).toBe(true);
+    });
+
+    it("should return false for edges with different weights", () => {
+      const edge1 = newEdge("A", "B", 1);
+      const edge2 = newEdge("A", "B", 2);
+      expect(edgeEqual(edge1, edge2)).toBe(false);
+    });
+
+    it("should return false for edges with different nodes", () => {
+      const edge1 = newEdge("A", "B", 1);
+      const edge2 = newEdge("A", "C", 1);
+      expect(edgeEqual(edge1, edge2)).toBe(false);
+    });
+
+    it("should return false for edges with one node matching but the other not, and same weight", () => {
+      const edge1 = newEdge("A", "B", 1);
+      const edge2 = newEdge("A", "C", 1);
+      expect(edgeEqual(edge1, edge2)).toBe(false);
     });
   });
 });
