@@ -1,12 +1,12 @@
 import { Graph, Node, Edge } from "./types";
 
 export function addNode(graph: Graph, node: Node): Graph {
-  if (graph.__nodes.some((n) => n.id === node.id)) {
+  if (graph.nodes.some((n) => n.id === node.id)) {
     return graph; // Node already exists, return original graph
   }
   return {
     ...graph,
-    __nodes: [...graph.__nodes, node],
+    nodes: [...graph.nodes, node],
   };
 }
 
@@ -43,6 +43,4 @@ export function addNeighbors(
   return newGraph;
 }
 
-export function getNodes(graph: Graph): Node[] {
-  return graph.__nodes;
-}
+

@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { Graph, Node, Edge } from "./types";
-import { addNode, addEdge, addNeighbors, getNodes } from "./graph";
+import { addNode, addEdge, addNeighbors } from "./graph";
 
 describe("Graph functions", () => {
   let initialGraph: Graph;
@@ -82,25 +82,6 @@ describe("Graph functions", () => {
 
       expect(newGraph.edges).toHaveLength(1);
       expect(newGraph.edges).toContainEqual({ from: "A", to: "B", weight: 1 });
-    });
-  });
-
-  describe("getNodes", () => {
-    it("should return all nodes in the graph", () => {
-      const node1: Node = { id: "X" };
-      const node2: Node = { id: "Y" };
-      let newGraph = addNode(initialGraph, node1);
-      newGraph = addNode(newGraph, node2);
-
-      const nodes = getNodes(newGraph);
-      expect(nodes).toHaveLength(2);
-      expect(nodes).toContainEqual(node1);
-      expect(nodes).toContainEqual(node2);
-    });
-
-    it("should return an empty array if no nodes are present", () => {
-      const nodes = getNodes(initialGraph);
-      expect(nodes).toHaveLength(0);
     });
   });
 });
