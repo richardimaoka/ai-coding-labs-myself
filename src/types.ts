@@ -3,8 +3,8 @@ export type Node = {
 };
 
 export type Edge = {
-  from: string; // Node ID of edge's start
-  to: string; // Node ID of edge's end
+  node1: string; // Node ID
+  node2: string; // Node ID
   weight: number;
 };
 

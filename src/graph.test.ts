@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { addEdge, addNode, emptyGraph } from "./graph";
-import { Edge, Node } from "./types";
+import { addEdge, addNode, emptyGraph, newEdge } from "./graph";
+import { Node } from "./types";
 
 describe("Graph functions", () => {
   describe("addNode", () => {
@@ -35,11 +35,10 @@ describe("Graph functions", () => {
       graph = addNode(graph, nodeA);
       graph = addNode(graph, nodeB);
 
-      const edge1: Edge = { from: "A", to: "B", weight: 1 };
-      const newGraph = addEdge(graph, edge1);
+      const newGraph = addEdge(graph, "A", "B", 1);
 
       expect(newGraph.edges).toHaveLength(1);
-      expect(newGraph.edges[0]).toEqual(edge1);
+      expect(newGraph.edges[0]).toEqual(newEdge("A", "B", 1));
       expect(newGraph).not.toBe(graph); // Ensure immutability
     });
 
@@ -50,29 +49,21 @@ describe("Graph functions", () => {
       graph = addNode(graph, nodeA);
       graph = addNode(graph, nodeB);
 
-      const edge1: Edge = { from: "A", to: "B", weight: 1 };
-      let newGraph = addEdge(graph, edge1);
+      let newGraph = addEdge(graph, "A", "B", 1);
 
-      expect(() => addEdge(newGraph, edge1)).toThrowError(`Edge from ${edge1.from} to ${edge1.to} with weight ${edge1.weight} already exists.`);
+      expect(() => addEdge(newGraph, "A", "B", 1)).toThrowError(
+        `Edge with nodes [A, B] with weight 1 already exists.`
+      );
     });
 
-    it("should throw an error if edge.from node does not exist", () => {
+    it("should throw an error if node does not exist", () => {
       let graph = emptyGraph();
       const nodeB: Node = { id: "B" };
       graph = addNode(graph, nodeB);
 
-      const edge1: Edge = { from: "A", to: "B", weight: 1 };
-      expect(() => addEdge(graph, edge1)).toThrowError(`Node with id ${edge1.from} does not exist in the graph.`);
+      expect(() => addEdge(graph, "A", "B", 1)).toThrowError(
+        `Node with id A does not exist in the graph.`
+      );
     });
-
-    it("should throw an error if edge.to node does not exist", () => {
-      let graph = emptyGraph();
-      const nodeA: Node = { id: "A" };
-      graph = addNode(graph, nodeA);
-
-      const edge1: Edge = { from: "A", to: "B", weight: 1 };
-      expect(() => addEdge(graph, edge1)).toThrowError(`Node with id ${edge1.to} does not exist in the graph.`);
-    });
-});
-
+  });
 });
