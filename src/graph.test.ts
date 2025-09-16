@@ -17,10 +17,13 @@ describe("Graph functions", () => {
     it("should not add a duplicate node", () => {
       const graph = emptyGraph();
       const node1: Node = { id: "A" };
-      let newGraph = addNode(graph, node1);
-      newGraph = addNode(newGraph, node1);
+      const newGraph = addNode(graph, node1);
 
       expect(newGraph.nodes).toHaveLength(1);
+
+      expect(() => addNode(newGraph, node1)).toThrowError(
+        `Node with id ${node1.id} already exists.`
+      );
     });
   });
 
@@ -42,6 +45,7 @@ describe("Graph functions", () => {
       newGraph = addEdge(newGraph, edge1);
 
       expect(newGraph.edges).toHaveLength(1);
+      expect(newGraph.edges).toContainEqual({ from: "A", to: "B", weight: 1 });
     });
   });
 });

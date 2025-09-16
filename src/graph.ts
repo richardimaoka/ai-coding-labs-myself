@@ -1,4 +1,4 @@
-import { Graph, Node, Edge } from "./types";
+import { Graph, Node, Edge } from './types';
 
 export function emptyGraph(): Graph {
   return {
@@ -8,8 +8,8 @@ export function emptyGraph(): Graph {
 }
 
 export function addNode(graph: Graph, node: Node): Graph {
-  if (graph.nodes.some((n) => n.id === node.id)) {
-    return graph; // Node already exists, return original graph
+  if (graph.nodes.some(n => n.id === node.id)) {
+    throw new Error(`Node with id ${node.id} already exists.`);
   }
   return {
     ...graph,
@@ -18,12 +18,7 @@ export function addNode(graph: Graph, node: Node): Graph {
 }
 
 export function addEdge(graph: Graph, edge: Edge): Graph {
-  if (
-    graph.edges.some(
-      (e) =>
-        e.from === edge.from && e.to === edge.to && e.weight === edge.weight
-    )
-  ) {
+  if (graph.edges.some(e => e.from === edge.from && e.to === edge.to && e.weight === edge.weight)) {
     return graph; // Edge already exists, return original graph
   }
   return {
@@ -31,7 +26,3 @@ export function addEdge(graph: Graph, edge: Edge): Graph {
     edges: [...graph.edges, edge],
   };
 }
-
-
-
-
