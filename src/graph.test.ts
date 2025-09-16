@@ -29,7 +29,12 @@ describe("Graph functions", () => {
 
   describe("addEdge", () => {
     it("should add a new edge to the graph", () => {
-      const graph = emptyGraph();
+      let graph = emptyGraph();
+      const nodeA: Node = { id: "A" };
+      const nodeB: Node = { id: "B" };
+      graph = addNode(graph, nodeA);
+      graph = addNode(graph, nodeB);
+
       const edge1: Edge = { from: "A", to: "B", weight: 1 };
       const newGraph = addEdge(graph, edge1);
 
@@ -38,14 +43,36 @@ describe("Graph functions", () => {
       expect(newGraph).not.toBe(graph); // Ensure immutability
     });
 
-    it("should not add a duplicate edge", () => {
-      const graph = emptyGraph();
+    it("should throw an error if a duplicate edge is added", () => {
+      let graph = emptyGraph();
+      const nodeA: Node = { id: "A" };
+      const nodeB: Node = { id: "B" };
+      graph = addNode(graph, nodeA);
+      graph = addNode(graph, nodeB);
+
       const edge1: Edge = { from: "A", to: "B", weight: 1 };
       let newGraph = addEdge(graph, edge1);
-      newGraph = addEdge(newGraph, edge1);
 
-      expect(newGraph.edges).toHaveLength(1);
-      expect(newGraph.edges).toContainEqual({ from: "A", to: "B", weight: 1 });
+      expect(() => addEdge(newGraph, edge1)).toThrowError(`Edge from ${edge1.from} to ${edge1.to} with weight ${edge1.weight} already exists.`);
     });
-  });
+
+    it("should throw an error if edge.from node does not exist", () => {
+      let graph = emptyGraph();
+      const nodeB: Node = { id: "B" };
+      graph = addNode(graph, nodeB);
+
+      const edge1: Edge = { from: "A", to: "B", weight: 1 };
+      expect(() => addEdge(graph, edge1)).toThrowError(`Node with id ${edge1.from} does not exist in the graph.`);
+    });
+
+    it("should throw an error if edge.to node does not exist", () => {
+      let graph = emptyGraph();
+      const nodeA: Node = { id: "A" };
+      graph = addNode(graph, nodeA);
+
+      const edge1: Edge = { from: "A", to: "B", weight: 1 };
+      expect(() => addEdge(graph, edge1)).toThrowError(`Node with id ${edge1.to} does not exist in the graph.`);
+    });
+});
+
 });
