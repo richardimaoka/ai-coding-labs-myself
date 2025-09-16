@@ -68,7 +68,7 @@ export function dijkstra(
 
   // Reconstruct path
   const path: string[] = [];
-  let currentNode = endNodeId;
+  let currentNode: string | null = endNodeId;
   while (currentNode !== null) {
     path.unshift(currentNode);
     currentNode = previousNodes[currentNode];
