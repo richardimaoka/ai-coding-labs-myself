@@ -17,7 +17,13 @@ describe("dijkstra", () => {
     graph = addEdge(graph, "A", "B", 1);
     graph = addEdge(graph, "B", "C", 1);
 
-    const result = dijkstra(graph, "A", "C");
-    expect(result).toEqual({ path: ["A", "B", "C"], distance: 2 });
+    const resultAA = dijkstra(graph, "A", "A");
+    expect(resultAA).toEqual({ path: ["A"], distance: 0 });
+
+    const resultAB = dijkstra(graph, "A", "B");
+    expect(resultAB).toEqual({ path: ["A", "B"], distance: 1 });
+
+    const resultAC = dijkstra(graph, "A", "C");
+    expect(resultAC).toEqual({ path: ["A", "B", "C"], distance: 2 });
   });
 });
